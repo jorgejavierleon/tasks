@@ -11,6 +11,18 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->version();
+$app->post('auth/login', [
+    'as' => 'login', 'uses' => 'AuthController@login'
+]);
+
+$app->group(
+    ['middleware' => 'jwt-auth', 'namespace' => 'App\Http\Controllers'],
+    function () use ($app) {
+
+    $app->get('users', [
+        'as' => 'users', 'uses' => 'UsersController@index'
+    ]);
+
+
 });
+
