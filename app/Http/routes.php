@@ -27,5 +27,12 @@ $app->group(
         'as' => 'users.show', 'uses' => 'UsersController@show'
     ]);
 
+    $app->post('users', [
+        'as' => 'users.store', 'uses' => 'UsersController@store'
+    ]);
+
+    $app->put('users/{id}', [
+        'as' => 'users.update', 'uses' => 'UsersController@update'
+    ]);
 });
 

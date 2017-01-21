@@ -17,13 +17,23 @@ class User extends Model implements
     use Authenticatable, Authorizable;
 
     /**
+     * The rules for validation.
+     *
+     * @var array
+     */
+    public static $rules = [
+        'firstname' => 'required',
+        'lastname' => 'required',
+        'email' => 'required',
+        'password' => 'required',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'firstname', 'lastname', 'email',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes excluded from the model's JSON form.
