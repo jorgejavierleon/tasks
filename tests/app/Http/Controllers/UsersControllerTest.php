@@ -123,4 +123,17 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->assertArrayHasKey('data', $this->response->getData(true));
     }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_deletes_a_user()
+    {
+        $user = factory(App\User::class)->create();
+
+        $this->delete('users/' . $user->id);
+        $this->seeStatusCode(204)->isEmpty();
+        $this->notSeeInDatabase('users', ['id' => $user->id]);
+    }
 }

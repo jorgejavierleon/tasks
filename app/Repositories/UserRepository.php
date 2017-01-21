@@ -47,6 +47,11 @@ class UserRepository
         return $user->update($fields);
     }
 
+    public function delete(User $user)
+    {
+        return $user->delete();
+    }
+
     /**
      * @return array
      */

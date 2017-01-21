@@ -75,4 +75,19 @@ class UsersController extends ApiController
 
         return $this->respondWithItem($user, new UsersTransformer());
     }
+
+    /**
+     * @param $id
+     * @return \Laravel\Lumen\Http\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function destroy($id)
+    {
+        $user = $this->userRepository->find($id);
+        if(!$user){
+            return $this->errorNotFound();
+        }
+        $this->userRepository->delete($user);
+
+        return response(null, 204);
+    }
 }

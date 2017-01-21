@@ -34,5 +34,9 @@ $app->group(
     $app->put('users/{id}', [
         'as' => 'users.update', 'uses' => 'UsersController@update'
     ]);
+
+    $app->delete('users/{id}', [
+        'as' => 'users.destroy', 'uses' => 'UsersController@destroy'
+    ]);
 });
 
