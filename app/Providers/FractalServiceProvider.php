@@ -1,15 +1,18 @@
 <?php
 
+
 namespace App\Providers;
+
 
 use App\Http\Responses\FractalResponse;
 use Illuminate\Support\ServiceProvider;
 use League\Fractal\Manager;
 
-class AppServiceProvider extends ServiceProvider
+class FractalServiceProvider extends ServiceProvider
 {
+
     /**
-     * Register any application services.
+     * Register the service provider.
      *
      * @return void
      */

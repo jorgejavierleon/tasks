@@ -2,19 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\UsersTransformer;
 use App\User;
 
-class UsersController extends Controller
+class UsersController extends ApiController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * @return array
@@ -22,8 +14,19 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json([
-            'data' => $users->toArray()
-        ], 200);
+        return $this->respondWithCollection($users, new UsersTransformer());
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function show($id)
+    {
+        $user = User::find($id);
+        if(!$user){
+            return $this->errorNotFound();
+        }
+        return $this->respondWithItem($user, new UsersTransformer());
     }
 }

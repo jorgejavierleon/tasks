@@ -20,9 +20,12 @@ $app->group(
     function () use ($app) {
 
     $app->get('users', [
-        'as' => 'users', 'uses' => 'UsersController@index'
+        'as' => 'users.index', 'uses' => 'UsersController@index'
     ]);
 
+    $app->get('users/{id}', [
+        'as' => 'users.show', 'uses' => 'UsersController@show'
+    ]);
 
 });
 
