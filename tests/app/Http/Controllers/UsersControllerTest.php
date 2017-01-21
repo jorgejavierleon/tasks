@@ -1,11 +1,8 @@
 <?php
 
-use Laravel\Lumen\Testing\DatabaseTransactions;
 
-class UsersControllerTest extends TestCase
+class UsersControllerTest extends ControllerTestCase
 {
-    use WithoutMiddleware;
-
     /**
      * @return void
      * @test
@@ -21,11 +18,13 @@ class UsersControllerTest extends TestCase
      */
     public function index_should_return_a_collection()
     {
-        $this->get('/users')
-            ->seeJson([
-                'firstname' => 'Pedaro'
-            ])->seeJson([
-                'firstname' => 'María'
-            ]);
+        $users = factory(App\User::class, 5)->create();
+
+        $this->get('/users');
+        $expected = [
+            'data' => $users->toArray()
+        ];
+
+        $this->seeJsonEquals($expected);
     }
 }

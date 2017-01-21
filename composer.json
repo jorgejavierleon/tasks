@@ -23,7 +23,8 @@
         "classmap": [
             "tests/",
             "database/",
-            "tests/WithoutMiddleware.php"
+            "tests/WithoutMiddleware.php",
+            "tests/ControllerTestCase.php"
         ]
     }
 }

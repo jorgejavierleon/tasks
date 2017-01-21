@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+
 class UsersController extends Controller
 {
     /**
@@ -19,9 +21,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return [
-            ['firstname' => 'Pedaro'],
-            ['firstname' => 'María'],
-        ];
+        $users = User::all();
+        return response()->json([
+            'data' => $users->toArray()
+        ], 200);
     }
 }
