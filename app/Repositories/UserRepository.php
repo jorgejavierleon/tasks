@@ -23,7 +23,7 @@ class UserRepository
      */
     public function all()
     {
-        return User::all();
+        return User::with('tasks')->get();
     }
 
     /**
