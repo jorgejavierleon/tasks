@@ -21,6 +21,7 @@ class ApiController extends Controller
     public function __construct(FractalResponse $fractal)
     {
         $this->fractal = $fractal;
+        $this->fractal->parseIncludes();
     }
 
     /**

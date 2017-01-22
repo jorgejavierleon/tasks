@@ -23,7 +23,7 @@ class PriorityRepository
      */
     public function all()
     {
-        return Priority::all();
+        return Priority::with('tasks')->get();
     }
 
     /**

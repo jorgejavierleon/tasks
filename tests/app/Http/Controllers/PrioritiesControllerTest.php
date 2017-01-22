@@ -42,6 +42,35 @@ class PrioritiesControllerTest extends ControllerTestCase
      * @return void
      * @test
      */
+    public function it_shows_optionally_includes_tasks()
+    {
+        $priority = factory(App\Priority::class)->create();
+        $tasks = factory(App\Task::class, 3)->create([
+            'priority_id' => $priority->id
+        ]);
+
+        $this->get("priorities/{$priority->id}?include=tasks")
+            ->seeStatusCode(200);
+
+        $body = json_decode($this->response->getContent(), true);
+
+        $this->assertArrayHasKey('data', $body);
+        $data = $body['data'];
+        $this->assertArrayHasKey('tasks', $data);
+        $this->assertArrayHasKey('data', $data['tasks']);
+        $this->assertCount(3, $data['tasks']['data']);
+
+        $actual = $data['tasks']['data'][0];
+        $task = $tasks->first();
+        $this->assertEquals($task->id, $actual['id']);
+        $this->assertEquals($task->title, $actual['title']);
+        $this->assertEquals($task->description, $actual['description']);
+    }
+
+    /**
+     * @return void
+     * @test
+     */
     public function it_stores_a_new_priority()
     {
         $priority = factory(App\Priority::class)->make();

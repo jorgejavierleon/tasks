@@ -25,3 +25,14 @@ $factory->define(App\Priority::class, function ($faker) {
         'name' => $faker->word,
     ];
 });
+
+$factory->define(App\Task::class, function ($faker) {
+    return [
+        'title' => $faker->sentence,
+        'description' => $faker->sentence,
+        'due_date' => $faker->dateTime(),
+        'priority_id' => function() {
+            return factory(App\Priority::class)->create()->id;
+        }
+    ];
+});

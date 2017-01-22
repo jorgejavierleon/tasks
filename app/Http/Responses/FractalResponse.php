@@ -4,6 +4,7 @@
 namespace App\Http\Responses;
 
 
+use Illuminate\Http\Request;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
@@ -21,17 +22,38 @@ class FractalResponse
      * @var SerializerAbstract
      */
     private $serializer;
+    /**
+     * @var Request
+     */
+    private $request;
 
     /**
      * FractalResponse constructor.
      * @param Manager $manager
      * @param SerializerAbstract $serializer
+     * @param Request $request
      */
-    public function __construct(Manager $manager, SerializerAbstract $serializer)
+    public function __construct(
+        Manager $manager,
+        SerializerAbstract $serializer,
+        Request $request)
     {
         $this->manager = $manager;
         $this->serializer = $serializer;
         $this->manager->setSerializer($serializer);
+        $this->request = $request;
+    }
+
+    /**
+     * @param null $includes
+     */
+    public function parseIncludes($includes = null)
+    {
+        if(empty($includes)){
+            $includes = $this->request->query('include', '');
+        }
+
+        $this->manager->parseIncludes($includes);
     }
 
     /**
