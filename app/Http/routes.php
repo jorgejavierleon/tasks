@@ -15,28 +15,41 @@ $app->post('auth/login', [
     'as' => 'login', 'uses' => 'AuthController@login'
 ]);
 
-$app->group(
-    ['middleware' => 'jwt-auth', 'namespace' => 'App\Http\Controllers'],
+$app->group(['middleware' => 'jwt-auth', 'namespace' => 'App\Http\Controllers'],
     function () use ($app) {
 
+    //Users
     $app->get('users', [
         'as' => 'users.index', 'uses' => 'UsersController@index'
     ]);
-
     $app->get('users/{id}', [
         'as' => 'users.show', 'uses' => 'UsersController@show'
     ]);
-
     $app->post('users', [
         'as' => 'users.store', 'uses' => 'UsersController@store'
     ]);
-
     $app->put('users/{id}', [
         'as' => 'users.update', 'uses' => 'UsersController@update'
     ]);
-
     $app->delete('users/{id}', [
         'as' => 'users.destroy', 'uses' => 'UsersController@destroy'
+    ]);
+
+    //Priorities
+    $app->get('priorities', [
+        'as' => 'priorities.index', 'uses' => 'PrioritiesController@index'
+    ]);
+    $app->get('priorities/{id}', [
+        'as' => 'priorities.show', 'uses' => 'PrioritiesController@show'
+    ]);
+    $app->post('priorities', [
+        'as' => 'priorities.store', 'uses' => 'PrioritiesController@store'
+    ]);
+    $app->put('priorities/{id}', [
+        'as' => 'priorities.update', 'uses' => 'PrioritiesController@update'
+    ]);
+    $app->delete('priorities/{id}', [
+        'as' => 'priorities.destroy', 'uses' => 'PrioritiesController@destroy'
     ]);
 });
 

@@ -3,10 +3,11 @@
 
 namespace App\Repositories;
 
-use App\User;
+
+use App\Priority;
 use Illuminate\Http\Request;
 
-class UserRepository
+class PriorityRepository
 {
     /**
      * @param $id
@@ -14,7 +15,7 @@ class UserRepository
      */
     public function find($id)
     {
-        return User::find($id);
+        return Priority::find($id);
     }
 
     /**
@@ -22,7 +23,7 @@ class UserRepository
      */
     public function all()
     {
-        return User::all();
+        return Priority::all();
     }
 
     /**
@@ -32,29 +33,28 @@ class UserRepository
     public function create(Request $request)
     {
         $fields = $this->getFieldsFromRequest($request);
-        return User::create($fields);
+        return Priority::create($fields);
     }
 
     /**
      * @param Request $request
-     * @param User $user
+     * @param Priority $priority
      * @return bool|int
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Priority $priority)
     {
         $fields = $this->getFieldsFromRequest($request);
-        $fields = array_except($fields, 'password');
-        return $user->update($fields);
+        return $priority->update($fields);
     }
 
     /**
-     * @param User $user
+     * @param Priority $priority
      * @return bool|null
      * @throws \Exception
      */
-    public function delete(User $user)
+    public function delete(Priority $priority)
     {
-        return $user->delete();
+        return $priority->delete();
     }
 
     /**
@@ -62,7 +62,7 @@ class UserRepository
      */
     public function rules()
     {
-        return User::$rules;
+        return Priority::$rules;
     }
 
     /**
@@ -71,12 +71,6 @@ class UserRepository
      */
     private function getFieldsFromRequest($request)
     {
-        return [
-            'firstname' => $request->input('firstname'),
-            'lastname' => $request->input('lastname'),
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-        ];
+        return ['name' => $request->input('name')];
     }
-
 }

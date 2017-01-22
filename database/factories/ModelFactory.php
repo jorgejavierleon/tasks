@@ -19,3 +19,9 @@ $factory->define(App\User::class, function ($faker) {
         'password' => app('hash')->make($faker->password),
     ];
 });
+
+$factory->define(App\Priority::class, function ($faker) {
+    return [
+        'name' => $faker->word,
+    ];
+});
