@@ -3,7 +3,6 @@
 
 namespace App\Transformers;
 
-
 use App\User;
 use League\Fractal\TransformerAbstract;
 

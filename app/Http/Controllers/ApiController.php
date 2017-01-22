@@ -50,7 +50,7 @@ class ApiController extends Controller
      */
     protected function respondWithItem($data, TransformerAbstract $transformer, $includes = null)
     {
-        if($includes){
+        if ($includes) {
             $this->fractal->parseIncludes($includes);
         }
         $rootScope = $this->fractal->item($data, $transformer);
@@ -65,7 +65,7 @@ class ApiController extends Controller
      */
     protected function respondWithCollection($data, TransformerAbstract $transformer, $includes = null)
     {
-        if($includes){
+        if ($includes) {
             $this->fractal->parseIncludes($includes);
         }
         $rootScope = $this->fractal->collection($data, $transformer);

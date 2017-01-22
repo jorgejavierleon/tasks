@@ -41,7 +41,7 @@ class TasksController extends ApiController
     public function show($id)
     {
         $task = $this->repository->find($id);
-        if(!$task){
+        if (!$task) {
             return $this->errorNotFound();
         }
         return $this->respondWithItem($task, new TasksTransformer());
@@ -68,7 +68,7 @@ class TasksController extends ApiController
     public function update(Request $request, $id)
     {
         $task = $this->repository->find($id);
-        if(!$task){
+        if (!$task) {
             return $this->errorNotFound();
         }
         $this->repository->update($request, $task);
@@ -83,7 +83,7 @@ class TasksController extends ApiController
     public function destroy($id)
     {
         $task = $this->repository->find($id);
-        if(!$task){
+        if (!$task) {
             return $this->errorNotFound();
         }
         $this->repository->delete($task);

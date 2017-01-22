@@ -41,7 +41,7 @@ class PrioritiesController extends ApiController
     public function show($id)
     {
         $priority = $this->repository->find($id);
-        if(!$priority){
+        if (!$priority) {
             return $this->errorNotFound();
         }
         return $this->respondWithItem($priority, new PrioritiesTrasnformer());
@@ -68,7 +68,7 @@ class PrioritiesController extends ApiController
     public function update(Request $request, $id)
     {
         $priority = $this->repository->find($id);
-        if(!$priority){
+        if (!$priority) {
             return $this->errorNotFound();
         }
         $this->repository->update($request, $priority);
@@ -83,7 +83,7 @@ class PrioritiesController extends ApiController
     public function destroy($id)
     {
         $priority = $this->repository->find($id);
-        if(!$priority){
+        if (!$priority) {
             return $this->errorNotFound();
         }
         $this->repository->delete($priority);

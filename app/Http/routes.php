@@ -15,8 +15,7 @@ $app->post('auth/login', [
     'as' => 'login', 'uses' => 'AuthController@login'
 ]);
 
-$app->group(['middleware' => 'jwt-auth', 'namespace' => 'App\Http\Controllers'],
-    function () use ($app) {
+$app->group(['middleware' => 'jwt-auth', 'namespace' => 'App\Http\Controllers'], function () use ($app) {
 
     //Users
     $app->get('users', [
@@ -76,4 +75,3 @@ $app->group(['middleware' => 'jwt-auth', 'namespace' => 'App\Http\Controllers'],
         'as' => 'task.destroy', 'uses' => 'TasksController@destroy'
     ]);
 });
-

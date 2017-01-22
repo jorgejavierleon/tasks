@@ -93,5 +93,4 @@ class UserRepository
             'password' => $request->input('password'),
         ];
     }
-
 }

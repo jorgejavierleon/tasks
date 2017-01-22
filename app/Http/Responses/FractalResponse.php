@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Responses;
-
 
 use Illuminate\Http\Request;
 use League\Fractal\Manager;
@@ -36,8 +34,8 @@ class FractalResponse
     public function __construct(
         Manager $manager,
         SerializerAbstract $serializer,
-        Request $request)
-    {
+        Request $request
+    ) {
         $this->manager = $manager;
         $this->serializer = $serializer;
         $this->manager->setSerializer($serializer);
@@ -49,7 +47,7 @@ class FractalResponse
      */
     public function parseIncludes($includes = null)
     {
-        if(empty($includes)){
+        if (empty($includes)) {
             $includes = $this->request->query('include', '');
         }
 

@@ -3,7 +3,6 @@
 
 namespace App\Repositories;
 
-
 use App\Priority;
 use Illuminate\Http\Request;
 

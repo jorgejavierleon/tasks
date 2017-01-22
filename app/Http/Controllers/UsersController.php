@@ -29,8 +29,7 @@ class UsersController extends ApiController
         FractalResponse $fractal,
         UserRepository $userRepository,
         TaskRepository $taskRepository
-    )
-    {
+    ) {
         parent::__construct($fractal);
         $this->userRepository = $userRepository;
         $this->taskRepository = $taskRepository;
@@ -52,7 +51,7 @@ class UsersController extends ApiController
     public function show($id)
     {
         $user = $this->userRepository->find($id);
-        if(!$user){
+        if (!$user) {
             return $this->errorNotFound();
         }
         return $this->respondWithItem($user, new UsersTransformer());
@@ -79,7 +78,7 @@ class UsersController extends ApiController
     public function update(Request $request, $id)
     {
         $user = $this->userRepository->find($id);
-        if(!$user){
+        if (!$user) {
             return $this->errorNotFound();
         }
         $this->userRepository->update($request, $user);
@@ -96,7 +95,7 @@ class UsersController extends ApiController
     {
         $user = $this->userRepository->find($userId);
         $task = $this->taskRepository->find($taskId);
-        if(!$user || !$task){
+        if (!$user || !$task) {
             return $this->errorNotFound();
         }
 
@@ -114,7 +113,7 @@ class UsersController extends ApiController
     {
         $user = $this->userRepository->find($userId);
         $task = $this->taskRepository->find($taskId);
-        if(!$user || !$task){
+        if (!$user || !$task) {
             return $this->errorNotFound();
         }
 
@@ -130,7 +129,7 @@ class UsersController extends ApiController
     public function destroy($id)
     {
         $user = $this->userRepository->find($id);
-        if(!$user){
+        if (!$user) {
             return $this->errorNotFound();
         }
         $this->userRepository->delete($user);
