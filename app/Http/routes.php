@@ -34,6 +34,13 @@ $app->group(['middleware' => 'jwt-auth', 'namespace' => 'App\Http\Controllers'],
     $app->delete('users/{id}', [
         'as' => 'users.destroy', 'uses' => 'UsersController@destroy'
     ]);
+    $app->put('users/{user}/tasks/{task}', [
+        'as' => 'users.addTask', 'uses' => 'UsersController@addTask'
+    ]);
+    $app->delete('users/{user}/tasks/{task}', [
+        'as' => 'users.removeTask', 'uses' => 'UsersController@removeTask'
+    ]);
+
 
     //Priorities
     $app->get('priorities', [

@@ -38,6 +38,39 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
+     * users/{$user->id}?include=tasks
+     * @return void
+     * @test
+     */
+    public function it_shows_optionally_includes_tasks()
+    {
+        $user = factory(App\User::class)->create();
+        $tasks = factory(App\Task::class, 3)->create();
+        foreach ($tasks as $task) {
+            $user->tasks()->attach($task->id);
+        }
+        $this->assertCount(3, $user->tasks);
+
+        $this->get("users/{$user->id}?include=tasks")
+            ->seeStatusCode(200);
+
+        $body = json_decode($this->response->getContent(), true);
+
+        $this->assertArrayHasKey('data', $body);
+        $data = $body['data'];
+        $this->assertArrayHasKey('tasks', $data);
+        $this->assertArrayHasKey('data', $data['tasks']);
+        $this->assertCount(3, $data['tasks']['data']);
+
+        $actual = $data['tasks']['data'][0];
+        $task = $tasks->first();
+        $this->assertEquals($task->id, $actual['id']);
+        $this->assertEquals($task->title, $actual['title']);
+        $this->assertEquals($task->description, $actual['description']);
+        $this->assertEquals($task->due_date, $actual['due_date']);
+    }
+
+    /**
      * @return void
      * @test
      */
@@ -51,7 +84,6 @@ class UsersControllerTest extends ControllerTestCase
                 'message' => 'Resource not found',
             ]
         ];
-
         $this->seeJsonEquals($expected);
     }
 
@@ -122,6 +154,62 @@ class UsersControllerTest extends ControllerTestCase
         $this->notSeeInDatabase('users', ['firstname' => $user->firstname]);
 
         $this->assertArrayHasKey('data', $this->response->getData(true));
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_adds_a_task_to_a_user()
+    {
+        $user = factory(App\User::class)->create();
+        $task = factory(App\Task::class)->create();
+
+        $this->assertCount(0, $user->tasks);
+
+        $this->put(
+            "users/{$user->id}/tasks/{$task->id}",
+            [], ['Accept' => 'application/json']
+        );
+
+        $this->seeStatusCode(200);
+
+        $dbUser = \App\User::find($user->id);
+        $this->assertCount(1, $dbUser->tasks);
+
+        $body = $this->response->getData(true);
+        $this->assertArrayHasKey('data', $body);
+
+        // Ensure the task id is in the response.
+        $this->assertArrayHasKey('tasks', $body['data']);
+        $this->assertArrayHasKey('data', $body['data']['tasks']);
+
+        // Make sure the task is in the response
+        $tasks = $body['data']['tasks'];
+        $this->assertEquals($task->id, $tasks['data'][0]['id']);
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_removes_a_task_from_a_user()
+    {
+        $user = factory(App\User::class)->create();
+        $tasks = factory(App\Task::class, 3)->create();
+        foreach ($tasks as $task) {
+            $user->tasks()->attach($task->id);
+        }
+        $this->assertCount(3, $user->tasks);
+
+        $task = $tasks->first();
+
+        $this->delete("users/{$user->id}/tasks/{$task->id}");
+        $this->seeStatusCode(204)->isEmpty();
+        $this->notSeeInDatabase('task_user', [
+            'user_id' => $user->id,
+            'task_id' => $task->id
+        ]);
     }
 
     /**

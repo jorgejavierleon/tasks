@@ -10,6 +10,15 @@ use League\Fractal\TransformerAbstract;
 class UsersTransformer extends TransformerAbstract
 {
     /**
+     * List of resources possible to include
+     *
+     * @var array
+     */
+    protected $availableIncludes = [
+        'tasks'
+    ];
+
+    /**
      * @param User $user
      * @return array
      */
@@ -31,5 +40,10 @@ class UsersTransformer extends TransformerAbstract
             'created_at' => $created_at,
             'updated_at' => $updated_at
         ];
+    }
+
+    public function includeTasks(User $user)
+    {
+        return $this->collection($user->tasks, new TasksTransformer());
     }
 }

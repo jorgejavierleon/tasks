@@ -45,10 +45,14 @@ class ApiController extends Controller
     /**
      * @param $data
      * @param TransformerAbstract $transformer
+     * @param null $includes
      * @return array
      */
-    protected function respondWithItem($data, TransformerAbstract $transformer)
+    protected function respondWithItem($data, TransformerAbstract $transformer, $includes = null)
     {
+        if($includes){
+            $this->fractal->parseIncludes($includes);
+        }
         $rootScope = $this->fractal->item($data, $transformer);
         return $this->respondWithArray($rootScope);
     }
@@ -56,10 +60,14 @@ class ApiController extends Controller
     /**
      * @param $data
      * @param TransformerAbstract $transformer
+     * @param null $includes
      * @return array
      */
-    protected function respondWithCollection($data, TransformerAbstract $transformer)
+    protected function respondWithCollection($data, TransformerAbstract $transformer, $includes = null)
     {
+        if($includes){
+            $this->fractal->parseIncludes($includes);
+        }
         $rootScope = $this->fractal->collection($data, $transformer);
         return $this->respondWithArray($rootScope);
     }

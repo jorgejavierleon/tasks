@@ -3,6 +3,7 @@
 
 namespace App\Repositories;
 
+use App\Task;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -55,6 +56,20 @@ class UserRepository
     public function delete(User $user)
     {
         return $user->delete();
+    }
+
+    /**
+     * @param User $user
+     * @param Task $task
+     */
+    public function addTask(User $user, Task $task)
+    {
+        $user->tasks()->attach($task);
+    }
+
+    public function removeTask(User $user, Task $task)
+    {
+        $user->tasks()->detach($task);
     }
 
     /**
