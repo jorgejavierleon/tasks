@@ -51,5 +51,22 @@ $app->group(['middleware' => 'jwt-auth', 'namespace' => 'App\Http\Controllers'],
     $app->delete('priorities/{id}', [
         'as' => 'priorities.destroy', 'uses' => 'PrioritiesController@destroy'
     ]);
+
+    //Tasks
+    $app->get('tasks', [
+        'as' => 'tasks.index', 'uses' => 'TasksController@index'
+    ]);
+    $app->get('tasks/{id}', [
+        'as' => 'tasks.show', 'uses' => 'TasksController@show'
+    ]);
+    $app->post('tasks', [
+        'as' => 'task.store', 'uses' => 'TasksController@store'
+    ]);
+    $app->put('tasks/{id}', [
+        'as' => 'task.update', 'uses' => 'TasksController@update'
+    ]);
+    $app->delete('tasks/{id}', [
+        'as' => 'task.destroy', 'uses' => 'TasksController@destroy'
+    ]);
 });
 
